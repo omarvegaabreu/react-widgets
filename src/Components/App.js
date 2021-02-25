@@ -1,6 +1,7 @@
 import React from "react";
 import { Container } from "semantic-ui-react";
 import Accordion from "./Accordion";
+import SearchBar from "./SearchBar";
 
 const items = [
   {
@@ -20,7 +21,8 @@ const items = [
 const App = () => {
   return (
     <Container className="app-container">
-      <Accordion items={items} />
+      {/* <Accordion items={items} /> */}
+      <SearchBar />
     </Container>
   );
 };
