@@ -7,16 +7,25 @@ import {
   Image,
   Segment,
   Header,
+  Icon,
 } from "semantic-ui-react";
 import axios from "axios";
 import upSplashApiKey from "../util/apikey";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 const SearchBar = () => {
   const [term, setTerm] = useState(""); //TERM BEING LOOKED UP
   const [searchResponse, setSearchResponse] = useState(""); //WIKIPEDIA RESPONSE
   const [image, setImage] = useState(""); //UPSPLASH IMAGE
+  const { transcript, resetTranscript } = useSpeechRecognition();
 
   useEffect(() => {
+    if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+      return null;
+    }
+
     const onSearchSubmit = async () => {
       //WIKIPEDIA API CALL
       const { data } = await axios.get(` https://en.wikipedia.org/w/api.php`, {
@@ -64,7 +73,12 @@ const SearchBar = () => {
         clearTimeout(timer);
       };
     }
-  }, [term, searchResponse, image]);
+  }, [term, searchResponse, image, transcript]);
+
+  const voiceSearch = () => {
+    SpeechRecognition.startListening();
+    setTerm(transcript);
+  };
 
   const renderedSearch = searchResponse
     ? searchResponse.map((search) => {
@@ -98,6 +112,15 @@ const SearchBar = () => {
             placeholder="Search..."
             onChange={(e) => setTerm(e.target.value)}
           />
+          <Button onClick={voiceSearch} animated>
+            <Button.Content visible>
+              <Icon name="microphone"></Icon>
+            </Button.Content>
+            <Button.Content hidden>
+              <Icon name="microphone slash" />
+            </Button.Content>
+          </Button>
+          <p>Voice search:{transcript}</p>
         </Form.Field>
       </Form>
       <Segment vertical>
