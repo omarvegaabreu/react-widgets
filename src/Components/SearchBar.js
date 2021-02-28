@@ -94,7 +94,6 @@ const SearchBar = () => {
             type="text"
             value={term}
             className="search-input"
-            loading
             icon="user"
             placeholder="Search..."
             onChange={(e) => setTerm(e.target.value)}
