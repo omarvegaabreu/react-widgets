@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "semantic-ui-react";
 import Accordion from "./Accordion";
 import SearchBar from "./SearchBar";
+import ButtonExampleToggle from "./ButtonToggle";
 
 const items = [
   {

@@ -14,6 +14,7 @@ import upSplashApiKey from "../util/apikey";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import ErrorModal from "./ErrorModal";
 
 const SearchBar = () => {
   const [term, setTerm] = useState(""); //TERM BEING LOOKED UP
@@ -76,6 +77,12 @@ const SearchBar = () => {
   }, [term, searchResponse, image, transcript]);
 
   const voiceSearch = () => {
+    if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+      return alert(
+        "Your browser does not support speech recognition, please use Chrome"
+      );
+    }
+
     SpeechRecognition.startListening();
     setTerm(transcript);
   };
