@@ -14,7 +14,6 @@ import upSplashApiKey from "../util/apikey";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import ErrorModal from "./ErrorModal";
 
 const SearchBar = () => {
   const [term, setTerm] = useState(""); //TERM BEING LOOKED UP
@@ -52,11 +51,11 @@ const SearchBar = () => {
         }
       );
 
+      const responseData = response.data.results[1].urls.small;
       //DO NOT REMOVE APP WILL BREAK,NO RESULTS ON INITIAL RENDER
-      try {
-        const responseData = response.data.results[1].urls.small;
+      if (responseData) {
         setImage(responseData);
-      } catch (error) {}
+      }
     };
 
     //condition there for smoother render, and for faster initial search
@@ -74,7 +73,7 @@ const SearchBar = () => {
         clearTimeout(timer);
       };
     }
-  }, [term, searchResponse, image, transcript]);
+  }, [term]);
 
   const voiceSearch = () => {
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -115,7 +114,6 @@ const SearchBar = () => {
             type="text"
             value={term}
             className="search-input"
-            icon="user"
             placeholder="Search..."
             onChange={(e) => setTerm(e.target.value)}
           />
@@ -127,7 +125,7 @@ const SearchBar = () => {
               <Icon name="microphone slash" />
             </Button.Content>
           </Button>
-          <p>Voice search:{transcript}</p>
+          <p>Voice search: {transcript}</p>
         </Form.Field>
       </Form>
       <Segment vertical>
