@@ -43,6 +43,7 @@ const App = () => {
     <Container className="app-container">
       {/* <Accordion items={items} /> */}
       {/* <SearchBar /> */}
+      {/* <SearchBar /> */}
       <DropdownMenu
         selected={selected}
         onChangeSelected={setSelected}
