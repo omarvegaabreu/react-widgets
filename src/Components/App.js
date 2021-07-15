@@ -1,24 +1,9 @@
 import React, { useState } from "react";
 import { Container } from "semantic-ui-react";
-import Accordion from "./Accordion";
-import SearchBar from "./SearchBar";
+// import Accordion from "./Accordion";
+// import SearchBar from "./SearchBar";
 // import ButtonExampleToggle from "./ButtonToggle";
 import DropdownMenu from "./Dropdown";
-
-const items = [
-  {
-    title: "title 1",
-    content: "content 1",
-  },
-  {
-    title: "title 2",
-    content: "content 2",
-  },
-  {
-    title: "title 3",
-    content: "content 3",
-  },
-];
 
 const options = [
   {
@@ -37,13 +22,17 @@ const options = [
 
 const App = () => {
   const [selected, setSelected] = useState(options[0]);
-  console.log("selected ", selected);
+
+  const clickEventDropdown = () => {
+    console.log("click bitch");
+  };
 
   return (
     <Container className="app-container">
       {/* <Accordion items={items} /> */}
       {/* <SearchBar /> */}
       {/* <SearchBar /> */}
+
       <DropdownMenu
         selected={selected}
         onChangeSelected={setSelected}

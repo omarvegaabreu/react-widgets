@@ -4,6 +4,10 @@ import React, { useState } from "react";
 const DropdownMenu = ({ options, selected, onChangeSelected }) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
+  const removeDropDownOutSideClick = document.body.addEventListener(
+    ("click", () => console.log("click"))
+  );
+
   const renderedOptions = options.map((option) => {
     if (option.value === selected.value) {
       //will not render if both values are the same
@@ -29,6 +33,7 @@ const DropdownMenu = ({ options, selected, onChangeSelected }) => {
           className={`ui selection dropdown ${
             toggleDropdown ? "visible active" : ""
           }`}
+          checkThis={removeDropDownOutSideClick}
         >
           <i className="dropdown icon"></i>
           <div className="text">{selected.label}</div>
