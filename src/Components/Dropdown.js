@@ -6,16 +6,31 @@ const DropdownMenu = ({ options, selected, onChangeSelected }) => {
   const ref = useRef();
 
   useEffect(() => {
+    const onBodyClick = (event) => {
+      if (ref.current.contains(event.target)) {
+        //.contains is used to check if one dom element contains another dom element
+        return;
+      }
+      setToggleDropdown(false);
+    };
     document.body.addEventListener(
       //event listener to be able to click out side to close drop down.
       "click",
+      onBodyClick,
+      { capture: true }
+    );
 
-      (event) => {
-        //check in order to be able to close modal without rendering body object
-        if (ref.current.contains(event.target)) {
-          //.contains is used to check if one dom element contains another dom element
-          return;
-        }
+    return () => {
+      document.body.removeEventListener("click", onBodyClick, {
+        capture: true,
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.addEventListener(
+      "click",
+      () => {
         setToggleDropdown(false);
       },
       { capture: true }
@@ -46,9 +61,7 @@ const DropdownMenu = ({ options, selected, onChangeSelected }) => {
       <div className="field">
         <label className="label">Select a Color</label>
         <div
-          onClick={() => {
-            setToggleDropdown(!toggleDropdown);
-          }}
+          onClick={() => setToggleDropdown(!toggleDropdown)}
           className={`ui selection dropdown ${
             toggleDropdown ? "visible active" : ""
           }`}

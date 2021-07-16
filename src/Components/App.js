@@ -24,18 +24,21 @@ const App = () => {
   const [selected, setSelected] = useState(options[0]);
   const [showDropDown, setShowDropDown] = useState(false);
   const clickForOptions = showDropDown ? null : "Click for Options";
+  const buttonDropDown = !showDropDown ? (
+    <button onClick={() => setShowDropDown(!showDropDown)}>
+      {clickForOptions}
+    </button>
+  ) : null;
   return (
     <Container className="app-container">
-      <button onClick={() => setShowDropDown(!showDropDown)}>
-        {clickForOptions}
-        {showDropDown ? (
-          <DropdownMenu
-            selected={selected}
-            onChangeSelected={setSelected}
-            options={options}
-          />
-        ) : null}
-      </button>
+      {buttonDropDown}
+      {showDropDown ? (
+        <DropdownMenu
+          selected={selected}
+          onChangeSelected={setSelected}
+          options={options}
+        />
+      ) : null}
     </Container>
   );
 };
