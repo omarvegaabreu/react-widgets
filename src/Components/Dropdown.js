@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { Dropdown, Menu } from "semantic-ui-react";
 
 const DropdownMenu = ({ options, selected, onChangeSelected }) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
-  const removeDropDownOutSideClick = document.body.addEventListener(
-    ("click", () => console.log("click"))
-  );
+  useEffect(() => {
+    document.body.addEventListener(
+      "click",
+
+      () => {
+        setToggleDropdown(false);
+      },
+      { capture: true }
+    );
+  }, []);
 
   const renderedOptions = options.map((option) => {
     if (option.value === selected.value) {
@@ -33,7 +40,6 @@ const DropdownMenu = ({ options, selected, onChangeSelected }) => {
           className={`ui selection dropdown ${
             toggleDropdown ? "visible active" : ""
           }`}
-          checkThis={removeDropDownOutSideClick}
         >
           <i className="dropdown icon"></i>
           <div className="text">{selected.label}</div>
