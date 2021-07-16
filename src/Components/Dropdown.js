@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // import { Dropdown, Menu } from "semantic-ui-react";
 
 const DropdownMenu = ({ options, selected, onChangeSelected }) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
+  const ref = useRef();
 
   useEffect(() => {
     document.body.addEventListener(
+      //event listener to be able to click out side to close drop down.
       "click",
 
-      () => {
+      (event) => {
+        //check in order to be able to close modal without rendering body object
+        if (ref.current.contains(event.target)) {
+          //.contains is used to check if one dom element contains another dom element
+          return;
+        }
         setToggleDropdown(false);
       },
       { capture: true }
@@ -25,18 +32,23 @@ const DropdownMenu = ({ options, selected, onChangeSelected }) => {
       <div
         key={option.value}
         className="item"
-        onClick={() => onChangeSelected(option)}
+        onClick={() => {
+          onChangeSelected(option);
+        }}
       >
         {option.label}
       </div>
     );
   });
+
   return (
-    <div className="ui form">
+    <div ref={ref} className="ui form">
       <div className="field">
         <label className="label">Select a Color</label>
         <div
-          onClick={() => setToggleDropdown(!toggleDropdown)}
+          onClick={() => {
+            setToggleDropdown(!toggleDropdown);
+          }}
           className={`ui selection dropdown ${
             toggleDropdown ? "visible active" : ""
           }`}

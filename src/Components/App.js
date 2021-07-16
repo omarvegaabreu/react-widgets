@@ -22,22 +22,20 @@ const options = [
 
 const App = () => {
   const [selected, setSelected] = useState(options[0]);
-
-  const clickEventDropdown = () => {
-    console.log("click bitch");
-  };
-
+  const [showDropDown, setShowDropDown] = useState(false);
+  const clickForOptions = showDropDown ? null : "Click for Options";
   return (
     <Container className="app-container">
-      {/* <Accordion items={items} /> */}
-      {/* <SearchBar /> */}
-      {/* <SearchBar /> */}
-
-      <DropdownMenu
-        selected={selected}
-        onChangeSelected={setSelected}
-        options={options}
-      />
+      <button onClick={() => setShowDropDown(!showDropDown)}>
+        {clickForOptions}
+        {showDropDown ? (
+          <DropdownMenu
+            selected={selected}
+            onChangeSelected={setSelected}
+            options={options}
+          />
+        ) : null}
+      </button>
     </Container>
   );
 };
